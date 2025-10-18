@@ -71,6 +71,10 @@
             -ms-user-select: auto;
             user-select: auto;
         }
+        /* sanfter Übergang der Seiten-Hintergrundfarbe bei Drag */
+        body {
+            transition: background-color 0.25s ease;
+        }
     </style></head><body class="bg-gray-200 text-gray-800">
 <div class="w-full max-w-2xl p-6 bg-white rounded-xl shadow-2xl">
 <div class="text-center mb-6">
@@ -354,6 +358,8 @@
                     flashcard.style.transform = '';
                     setTimeout(() => flashcard.style.transition = '', 200);
                 }
+                // Hintergrund zurücksetzen
+                document.body.style.backgroundColor = '';
                 isDragging = false;
             }
 
@@ -375,6 +381,14 @@
                 currentY = e.touches[0].clientY;
                 const dx = currentX - startX;
                 const rotate = dx / 20; // small rotation for feedback
+                // set background: rechts -> grün, links -> rot, klein -> neutral
+                if (dx > 10) {
+                    document.body.style.backgroundColor = '#dcfce7'; // light green
+                } else if (dx < -10) {
+                    document.body.style.backgroundColor = '#fee2e2'; // light red
+                } else {
+                    document.body.style.backgroundColor = '';
+                }
                 // During swipe we only translate/rotate around Z axis for feedback — do NOT apply Y-rotation (no flip while dragging)
                 flashcard.style.transform = `translateX(${dx}px) rotate(${rotate}deg)`;
                 e.preventDefault();
@@ -401,6 +415,14 @@
                 currentY = e.clientY;
                 const dx = currentX - startX;
                 const rotate = dx / 20;
+                // set background: rechts -> grün, links -> rot, klein -> neutral
+                if (dx > 10) {
+                    document.body.style.backgroundColor = '#dcfce7';
+                } else if (dx < -10) {
+                    document.body.style.backgroundColor = '#fee2e2';
+                } else {
+                    document.body.style.backgroundColor = '';
+                }
                 // During drag with mouse only translate/rotate around Z axis — do NOT apply Y-rotation (no flip while dragging)
                 flashcard.style.transform = `translateX(${dx}px) rotate(${rotate}deg)`;
             });
@@ -445,12 +467,17 @@
                 // direction: 'right' or 'left'
                 const dist = direction === 'right' ? '120%' : '-120%';
                 const rot = direction === 'right' ? 8 : -8;
+                // set background briefly to match direction
+                if (direction === 'right') document.body.style.backgroundColor = '#dcfce7';
+                else document.body.style.backgroundColor = '#fee2e2';
                 flashcard.style.transition = 'transform 0.25s ease';
                 flashcard.style.transform = `translateX(${dist}) rotate(${rot}deg)`;
                 // wait for animation, then reset and callback
                 setTimeout(() => {
                     flashcard.style.transition = '';
                     flashcard.style.transform = '';
+                    // reset background after animation
+                    document.body.style.backgroundColor = '';
                     if (typeof callback === 'function') callback();
                 }, 260);
             }
