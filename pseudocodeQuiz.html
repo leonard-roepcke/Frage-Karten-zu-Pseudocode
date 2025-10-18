@@ -87,38 +87,36 @@
 
             // Hardgecodete CSV-Daten als String
             const csvData = `Nummer;Vorseite;Rückseite
-1; Was ist eine Linked List?; Eine Linked List ist eine Datenstruktur, die aus miteinander verketteten Knoten besteht, wobei jeder Knoten Daten und einen Verweis (Pointer) auf den nächsten Knoten enthält.
-2; Worin unterscheidet sich eine Linked List von einem Array?; Ein Array hat feste Größe und speichert Elemente in zusammenhängendem Speicher, während eine Linked List dynamisch wächst und ihre Elemente im Speicher verteilt sind.
-3; Was ist ein Knoten in einer Linked List?; Ein Knoten ist ein einzelnes Element einer Linked List und enthält meist zwei Teile: die gespeicherten Daten und einen Zeiger auf den nächsten Knoten.
-4; Was bedeutet „head“ in einer Linked List?; Der Head ist der erste Knoten einer Linked List und dient als Einstiegspunkt in die Liste.
-5; Was bedeutet „tail“ in einer Linked List?; Der Tail ist der letzte Knoten einer Linked List und zeigt meist auf null (bzw. keinen weiteren Knoten).
-6; Was passiert, wenn die Linked List leer ist?; Wenn sie leer ist, zeigt der Head-Zeiger auf null und es gibt keine Knoten in der Liste.
-7; Wie fügt man ein neues Element am Ende einer Linked List hinzu?; Man erstellt einen neuen Knoten und ändert den Zeiger des letzten Knotens so, dass er auf diesen neuen Knoten zeigt.
-8; Wie kann man das erste Element einer Linked List löschen?; Man setzt den Head-Zeiger auf den zweiten Knoten und gibt den alten ersten Knoten frei.
-9; Warum braucht eine Linked List keinen zusammenhängenden Speicherplatz?; Weil jeder Knoten unabhängig im Speicher liegt und über Zeiger miteinander verbunden ist.
-10; Was ist eine einfach verkettete Liste?; Eine einfach verkettete Liste ist eine Linked List, bei der jeder Knoten nur einen Zeiger auf den nächsten Knoten enthält.
-11; Was ist eine doppelt verkettete Liste?; Eine doppelt verkettete Liste hat in jedem Knoten zwei Zeiger: einen auf den nächsten und einen auf den vorherigen Knoten.
-12; Was ist eine Ring Liste?; Eine Ring Liste ist eine Linked List, bei der der letzte Knoten wieder auf den ersten zeigt, sodass kein Ende existiert.
-13; Welche Vorteile bietet eine doppelt verkettete Liste?; Sie erlaubt das Durchlaufen in beide Richtungen und erleichtert das Einfügen und Löschen von Elementen in der Mitte.
-14; Welche Nachteile hat eine doppelt verkettete Liste?; Sie benötigt mehr Speicherplatz und ist etwas komplexer zu verwalten, da jeder Knoten zwei Zeiger enthält.
-15; Wie erkennt man das Ende einer Linked List?; Man erkennt es daran, dass der Zeiger des letzten Knotens auf null zeigt.
-16; Wie kann man die Länge einer Linked List bestimmen?; Man durchläuft die Liste von Head bis Tail und zählt dabei alle Knoten.
-17; Was passiert, wenn man einen Knoten löscht, ohne den Zeiger des vorherigen Knotens zu aktualisieren?; Der gelöschte Knoten bleibt im Speicher unerreichbar, und die Liste wird unterbrochen.
-18; Wie kann man ein Element an einer bestimmten Position einfügen?; Man durchläuft die Liste bis zu dieser Position, erstellt einen neuen Knoten und ändert die Zeiger so, dass der neue Knoten zwischen zwei bestehende eingefügt wird.
-19; Wie kann man ein bestimmtes Element in einer Linked List suchen?; Man durchläuft die Liste vom Head aus und vergleicht jeden Knotendatenwert mit dem gesuchten Wert.
-20; Warum ist der Zugriff auf das n-te Element langsamer als in einem Array?; Weil man jedes vorherige Element durchlaufen muss, da kein direkter Indexzugriff möglich ist.
-21; Wie kann man eine Linked List rückwärts anzeigen?;
-Man läuft die Liste durch und merkt sich die Elemente, um sie danach in umgekehrter Reihenfolge auszugeben.
-22; Wie kann man eine Linked List umkehren (reverse)?; Man verändert die Zeiger jedes Knotens so, dass sie auf den vorherigen statt auf den nächsten zeigen.
-23; Wie merkt man, dass sich eine Linked List im Kreis dreht (Zyklus hat)?
-Wenn man beim Durchlaufen wieder auf einen Knoten trifft, den man schon gesehen hat, enthält die Liste einen Kreis.
-24; Was passiert, wenn zwei Knoten auf denselben Speicherbereich zeigen?; Das kann zu undefiniertem Verhalten führen, weil Änderungen an einem Knoten auch den anderen betreffen.
-25; Wie kann man zwei Linked Lists zusammenführen (merge)?; Man verbindet den letzten Knoten der ersten Liste mit dem Head der zweiten Liste.
-26; Wie kann man prüfen, ob zwei Linked Lists denselben Inhalt haben?; Man durchläuft beide gleichzeitig und vergleicht jeden Datenwert sowie die Länge.
-27; Warum ist Speicherverwaltung bei Linked Lists wichtig?; Weil beim Löschen von Knoten der Speicher manuell freigegeben werden muss, um Lecks zu vermeiden.
-28; Wie kann man eine Linked List effizient löschen?; Man durchläuft sie und gibt nacheinander alle Knoten frei, bis Head null ist.
-29; Welche Datenstrukturen basieren auf Linked Lists?; Beispiele sind Stacks, Queues und Hash-Tabellen mit Verkettung.
-30; In welchen Situationen ist eine Linked List besser als ein Array?; Wenn häufig Elemente eingefügt oder gelöscht werden und die Größe der Datenmenge sich oft ändert.
+ 1; Was beschreibt Pseudocode hauptsächlich (A) Eine ausführbare Programmiersprache (B) Eine textbasierte Darstellung eines Algorithmus (C) Ein Flussdiagramm; B
+ 2; Muss Pseudocode vom Computer ausführbar sein (A) Ja (B) Nein; B
+ 3; Dürfen Kommentare in Pseudocode verwendet werden (A) Ja (B) Nein; A
+ 4; Wie schreibt man einen Kommentar im Pseudocode (A) // (B) # (C) gar nicht; A oder B
+ 5; Für was steht GZ (A) Gerundet (B) int (C) Gaußsche Normalverteilung; A
+ 6; Wie initialisiert man eine Variable (A) x ← 0 (B) INIT x (C) CREATE x; A
+ 7; Wie wird eine Zuweisung in Pseudocode meist dargestellt (A) x = 5 (B) x + 5 (C) x ← 5; C
+ 8; Wie gibt man Text oder Zahlen aus (A) AUSGABE "Text" (B) PRINT "Text" (C) OUTPUT; A
+ 9; Wie liest man Eingaben vom Benutzer ein (A) EINGABE x (B) READ x (C) INPUT; A
+ 10; Wie bezeichnet man ein Array in Pseudocode (A) Liste[1..n] (B) Array[1..n] (C) Variable; A oder B
+ 11; Wie prüft man, ob zwei Werte gleich sind (A) WENN x = y DANN … (B) WENN x ≠ y DANN … (C) WENN x + y DANN …; A
+ 12; Wie wird eine Bedingung in Pseudocode geschrieben (A) IF (…) THEN … (B) WENN … DANN … (C) BEDINGUNG … DANN …; B
+ 13; Wie macht man eine bedingte Anweisung in Pseudocode; WENN Bedingung DANN Anweisung SONST andere_Anweisung
+ 14; Wie formuliert man eine wiederholte Anweisung in Pseudocode; WIEDERHOLE … BIS Bedingung
+ 15; Welche Grundstruktur gehört NICHT zum Pseudocode (A) IF-ELSE (B) Schleife (C) Klassendiagramme; C
+ 16; Welche Schleifenarten gibt es in Pseudocode (A) FÜR … BIS … (B) SOLANGE … (C) WENN …; A und B
+ 17; Wie schreibt man eine Zählerschleife in Pseudocode; FÜR i VON 1 BIS n MACHE … ENDE FÜR
+ 18; Wie wird eine Bedingung „solange wahr“ in Pseudocode ausgedrückt (A) SOLANGE … WIEDERHOLE … ENDE SOLANGE (B) IF … (C) LOOP …; A
+ 19; Wie gibt man einen Wert zurück (A) RÜCKGABE x (B) garnicht (C) ZURÜCKGEBEN x; A
+ 20; Wie bricht man eine Schleife vorzeitig ab (A) WENN Bedingung DANN ABBRUCH (B) END LOOP (C) STOP; A
+ 21; Wie ruft man eine Funktion auf (A) Name(Parameter) (B) CALL Name (C) FUNKTION Name; A
+ 22; Wie schreibt man eine Funktion in Pseudocode; FUNKTION Name(Parameter) … RÜCKGABE Wert ENDE FUNKTION
+ 23; Wie sucht man einen Wert in einer Liste (A) Mit einer Schleife über die Liste und IF-Bedingung (B) Direktzugriff per Index (C) Mit RETURN; A
+ 24; Wie prüft man, ob ein Wert in einer Liste enthalten ist; FÜR jedes Element IN Liste WENN Element = Wert DANN …
+ 25; Wie tauscht man zwei Variablen in Pseudocode (A) TEMP ← x | x ← y | y ← TEMP (B) x ← y; y ← x (C) SWAP(x, y); A
+ 26; Wie findet man das größte Element in einer Liste (A) max ← Liste[1]; FÜR i VON 1 BIS Länge(Liste) WENN Liste[i] > max DANN max ← Liste[i] ENDE FÜR (B) List.MAX (C) OUTPUT max; A
+ 27; Wie berechnet man die Summe aller Werte in einer Liste (A) summe ← 0; FÜR i VON 1 BIS Länge(Liste) MACHE summe ← summe + Liste[i] ENDE FÜR (B) sum ← SUM(Liste) (C) sum ← Liste[1] + … + Liste[n]; A
+ 28; Wie beendet man ein Programm in Pseudocode (A) ENDE PROGRAMM (B) BREAK (C) EXIT; A
+ 29; Wozu wird Pseudocode verwendet (A) Programme direkt auszuführen (B) Algorithmen verständlich zu planen (C) Datenbanken zu erstellen; B
+ 30; Welchen Vorteil hat Pseudocode gegenüber Sequenzdiagrammen (A) Bessere grafische Darstellung (B) Läuft schneller (C) Schneller zu schreiben und näher an der Programmlogik; C
 
 `;
 
