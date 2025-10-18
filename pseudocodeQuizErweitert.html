@@ -327,10 +327,17 @@
             let currentX = 0;
             let isDragging = false;
             const SWIPE_THRESHOLD = 60; // px
+            // Wenn nach Drag ein Klick folgen könnte, verhindern wir kurz das Drehen
+            let preventClickAfterDrag = false;
 
             function handleSwipeEnd() {
                 const dx = currentX - startX;
                 const dy = startY - currentY; // not used, but could check for vertical movement
+                // Wenn genug Bewegung stattgefunden hat, verhindern wir nachfolgende Klicks kurz
+                if (Math.abs(dx) > 10) {
+                    preventClickAfterDrag = true;
+                    setTimeout(() => preventClickAfterDrag = false, 350);
+                }
                 // reset visual transform
                 if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(currentY - startY || 0)) {
                     if (dx > 0) {
@@ -406,7 +413,7 @@
             // Klick auf ganze Karte zum Drehen
             flashcard.addEventListener('click', (e) => {
                 // prevent click from firing after a drag
-                if (isDragging) return;
+                if (isDragging || preventClickAfterDrag) return;
                 flipCard();
             });
 
@@ -464,8 +471,8 @@
                 } else if (e.code === 'Space' || e.key === ' ') {
                     // Leertaste zum Drehen
                     e.preventDefault();
-                    // prevent flipping while dragging
-                    if (!isDragging) flipCard();
+                    // prevent flipping while dragging or just after a drag
+                    if (!isDragging && !preventClickAfterDrag) flipCard();
                 }
             });
 
