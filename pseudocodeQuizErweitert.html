@@ -58,6 +58,19 @@
             gap: 0.5rem;
             margin-top: 1rem;
         }
+        /* Verhindere Textauswahl auf der Seite, erlaube Auswahl in Eingabefeldern */
+        body, .card, .card * {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Older Firefox */
+            -ms-user-select: none;     /* IE10+/Edge */
+            user-select: none;
+        }
+        input, textarea, select, button {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
+        }
     </style></head><body class="bg-gray-200 text-gray-800">
 <div class="w-full max-w-2xl p-6 bg-white rounded-xl shadow-2xl">
 <div class="text-center mb-6">
@@ -177,16 +190,16 @@
                 const card = deck[index];
                 if (!card) return;
 
-                // Setze die Karte auf die Vorderseite, falls sie umgedreht war
-                if (isFlipped) {
-                    flashcard.classList.remove('flipped');
-                    isFlipped = false;
-                    setTimeout(() => {
-                        updateCardContent(card);
-                    }, 250);
-                } else {
-                    updateCardContent(card);
-                }
+                // Immer die Vorderseite zeigen, wenn eine neue Karte geladen wird
+                flashcard.classList.remove('flipped');
+                isFlipped = false;
+
+                // Resetet auch inline-Transform/Transition (z.B. nach Drag)
+                flashcard.style.transition = '';
+                flashcard.style.transform = '';
+
+                // Aktualisiere sofort den Karteninhalt
+                updateCardContent(card);
 
                 // Aktualisiere den Zustand der "Nochmal lernen"-Checkbox
                 const cardIdentifier = card['Nummer'];
@@ -219,6 +232,20 @@
                 if (!deck || deck.length === 0) return;
                 currentCardIndex = (currentCardIndex + 1) % deck.length;
                 // reset transform after swipe
+                flashcard.style.transition = 'transform 0.3s ease';
+                flashcard.style.transform = '';
+                setTimeout(() => {
+                    flashcard.style.transition = '';
+                }, 300);
+                loadCard(currentCardIndex);
+            }
+
+            // Hilfsfunktion: zur vorherigen Karte
+            function goToPreviousCard() {
+                const deck = getDeck();
+                if (!deck || deck.length === 0) return;
+                currentCardIndex = (currentCardIndex - 1 + deck.length) % deck.length;
+                // reset transform after animation
                 flashcard.style.transition = 'transform 0.3s ease';
                 flashcard.style.transform = '';
                 setTimeout(() => {
@@ -386,6 +413,60 @@
             // Prevent checkbox click from propagating to card
             learnAgainCheckbox.addEventListener('click', (e) => {
                 e.stopPropagation();
+            });
+
+            // Verhindere, dass die Karte als HTML-Drag startet
+            flashcard.setAttribute('draggable', 'false');
+            flashcard.addEventListener('dragstart', (e) => e.preventDefault());
+
+            // Globales selectstart verhindern, außer bei Eingabefeldern
+            document.addEventListener('selectstart', (e) => {
+                const tag = (e.target && e.target.tagName || '').toLowerCase();
+                if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+                e.preventDefault();
+            });
+
+            // Tastatursteuerung: Pfeiltasten & Leertaste
+            function isTypingInField() {
+                const el = document.activeElement;
+                if (!el) return false;
+                const tag = (el.tagName || '').toLowerCase();
+                return tag === 'input' || tag === 'textarea' || el.isContentEditable;
+            }
+
+            function animateSlide(direction, callback) {
+                // direction: 'right' or 'left'
+                const dist = direction === 'right' ? '120%' : '-120%';
+                const rot = direction === 'right' ? 8 : -8;
+                flashcard.style.transition = 'transform 0.25s ease';
+                flashcard.style.transform = `translateX(${dist}) rotate(${rot}deg)`;
+                // wait for animation, then reset and callback
+                setTimeout(() => {
+                    flashcard.style.transition = '';
+                    flashcard.style.transform = '';
+                    if (typeof callback === 'function') callback();
+                }, 260);
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (isTypingInField()) return; // don't intercept typing
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    animateSlide('right', () => {
+                        goToNextCard();
+                    });
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    animateSlide('left', () => {
+                        // go to previous card
+                        goToPreviousCard();
+                    });
+                } else if (e.code === 'Space' || e.key === ' ') {
+                    // Leertaste zum Drehen
+                    e.preventDefault();
+                    // prevent flipping while dragging
+                    if (!isDragging) flipCard();
+                }
             });
 
             // Initialisierung
